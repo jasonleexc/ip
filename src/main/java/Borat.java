@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Borat {
 
-    private static List<String> currList = new ArrayList<>();
+    private static final List<String> currList = new ArrayList<>();
 
     public static void main(String[] args) {
         greet();
