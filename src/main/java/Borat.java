@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Borat {
 
-    private static final List<String> currList = new ArrayList<>();
+    private static final List<Task> currList = new ArrayList<>();
 
     public static void main(String[] args) {
         greet();
@@ -23,12 +23,15 @@ public class Borat {
 
         while (true) {
             command = sc.nextLine().trim();
-            if (command.equalsIgnoreCase("bye")) {
+            String[] words = command.split(" ");
+            if (command.equals("bye")) {
                 break;
             } else if (command.equals("list")) {
                 listItems();
+            } else if (words[0].equals("mark") || words[0].equals("unmark")) {
+                taskMarker(words);
             } else {
-                currList.add(command);
+                currList.add(new Task(command));
                 System.out.println("added: " + command);
             }
         }
@@ -36,13 +39,26 @@ public class Borat {
         sc.close();
     }
 
+    private static void taskMarker(String[] words) {
+        Task task = currList.get(Integer.parseInt(words[1]) - 1);
+
+        if (words[0].equals("mark")) {
+            task.setDone(true);
+            System.out.println("Nice! I've marked this task as done: ");
+        } else {
+            task.setDone(false);
+            System.out.println("Ok, I've marked this task as not done yet: ");
+        }
+
+        System.out.println(" " + task.toString());
+    }
     private static void listItems() {
-        System.out.println(" ");
+        System.out.println("Here are the tasks in your list: ");
         if (currList.isEmpty()) {
             System.out.println("No items yet");
         } else {
             for (int i = 0; i < currList.size(); i++) {
-                System.out.println(i + 1 + ". " + currList.get(i));
+                System.out.println(i + 1 + "." + currList.get(i));
             }
         }
     }
