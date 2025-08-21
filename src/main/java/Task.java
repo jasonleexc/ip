@@ -1,6 +1,6 @@
-public class Task {
-    private final String description;
-    private boolean isDone;
+public abstract class Task {
+    protected final String description;
+    protected boolean isDone;
 
     Task (String description) {
         this.description = description;
@@ -11,8 +11,6 @@ public class Task {
         this.isDone = bool;
     }
 
-    @Override
-    public String toString() {
-        return "[" + (isDone ? "X" : " ") + "] " + description;
-    }
+    public abstract String getType();
+
 }

@@ -8,7 +8,7 @@ public class Borat {
 
     public static void main(String[] args) {
         greet();
-        echo();
+        run();
         exit();
     }
 
@@ -17,26 +17,64 @@ public class Borat {
         System.out.println("What can I do for you?");
     }
 
-    private static void echo() {
+    private static void run() {
         Scanner sc = new Scanner(System.in);
         String command;
 
         while (true) {
             command = sc.nextLine().trim();
-            String[] words = command.split(" ");
+            String[] split = command.split("\\s", 2);
+            String firstWord = split[0];
+            String description = split.length > 1 ? split[1] : "";
+
             if (command.equals("bye")) {
                 break;
             } else if (command.equals("list")) {
                 listItems();
-            } else if (words[0].equals("mark") || words[0].equals("unmark")) {
-                taskMarker(words);
-            } else {
-                currList.add(new Task(command));
-                System.out.println("added: " + command);
+            } else if (firstWord.equals("mark") || firstWord.equals("unmark")) {
+                taskMarker(split);
+            } else if (firstWord.equals("todo")) {
+                currList.add(new ToDo(description));
+                System.out.println("added: " + description);
+                System.out.println("Now you have " + currList.size() + " tasks in the list.");
+            } else if (firstWord.equals("event")) {
+                String[] lst = splitter(split, 3);
+                currList.add(new Event(lst[0], lst[1], lst[2]));
+                System.out.println("added: " + description);
+                System.out.println("Now you have " + currList.size() + " tasks in the list.");
+            } else if (firstWord.equals("deadline")) {
+                String[] lst = splitter(split, 2);
+                currList.add(new Deadline(lst[0], lst[1]));
+                System.out.println("added: " + description);
+                System.out.println("Now you have " + currList.size() + " tasks in the list.");
             }
         }
 
         sc.close();
+    }
+
+    // currently, the output is still wrong
+    private static String[] splitter(String[] cmd, int num) {
+        String rest = cmd[1];
+
+        if (num == 2) {
+            String[] parts = rest.split("/by", num);
+            String desc = parts[0].trim();
+            String deadline = parts[1].trim();
+
+            return new String[] {desc, deadline}; // have to fix this one
+        } else if (num == 3) {
+            String[] parts = rest.split("\\s*/from\\s*|\\s*/to\\s*", num);
+
+            String desc = parts[0].trim();
+            String start = parts[1].trim();
+            String end = parts[2].trim();
+
+            return new String[] {desc, start, end};
+        }
+
+        throw new IllegalArgumentException("num must be 2 or 3");
+
     }
 
     private static void taskMarker(String[] words) {
