@@ -6,7 +6,7 @@ public class Borat {
 
     private static final List<Task> currList = new ArrayList<>();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws BoratExceptions {
         greet();
         run();
         exit();
@@ -17,7 +17,7 @@ public class Borat {
         System.out.println("What can I do for you?");
     }
 
-    private static void run() {
+    private static void run() throws BoratExceptions {
         Scanner sc = new Scanner(System.in);
         String command;
 
@@ -27,6 +27,10 @@ public class Borat {
             String firstWord = split[0];
             String description = split.length > 1 ? split[1] : "";
 
+            // handle exceptions
+            if (command.length() == 1) {
+                System.out.println("Command has no description!");
+            }
             if (command.equals("bye")) {
                 break;
             } else if (command.equals("list")) {
@@ -34,7 +38,9 @@ public class Borat {
             } else if (firstWord.equals("mark") || firstWord.equals("unmark")) {
                 taskMarker(split);
             } else if (firstWord.equals("todo")) {
-                currList.add(new ToDo(description));
+                if (description.isEmpty()) {
+                    throw new BoratExceptions("Command cannot be empty!");
+                }
                 System.out.println("added: " + description);
                 System.out.println("Now you have " + currList.size() + " tasks in the list.");
             } else if (firstWord.equals("event")) {
@@ -47,13 +53,14 @@ public class Borat {
                 currList.add(new Deadline(lst[0], lst[1]));
                 System.out.println("added: " + description);
                 System.out.println("Now you have " + currList.size() + " tasks in the list.");
+            } else {
+                System.out.println("I don't know what that means.");
             }
         }
 
         sc.close();
     }
 
-    // currently, the output is still wrong
     private static String[] splitter(String[] cmd, int num) {
         String rest = cmd[1];
 
