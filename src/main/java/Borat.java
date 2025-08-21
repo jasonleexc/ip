@@ -41,6 +41,7 @@ public class Borat {
                 if (description.isEmpty()) {
                     throw new BoratExceptions("Command cannot be empty!");
                 }
+                currList.add(new ToDo(description));
                 System.out.println("added: " + description);
                 System.out.println("Now you have " + currList.size() + " tasks in the list.");
             } else if (firstWord.equals("event")) {
@@ -53,12 +54,24 @@ public class Borat {
                 currList.add(new Deadline(lst[0], lst[1]));
                 System.out.println("added: " + description);
                 System.out.println("Now you have " + currList.size() + " tasks in the list.");
+            } else if (firstWord.equals("delete")) {
+                if (description.isEmpty()) {
+                    throw new BoratExceptions("Please provide a task number to delete.");
+                }
+                deleteTask(Integer.parseInt(split[1]));
+                System.out.println("Noted. I've removed this task: " + description);
+                System.out.println("Now you have " + currList.size() + " tasks in the list.");
             } else {
                 System.out.println("I don't know what that means.");
             }
         }
 
         sc.close();
+    }
+
+    private static void deleteTask(int num) {
+
+        currList.remove(num - 1);
     }
 
     private static String[] splitter(String[] cmd, int num) {
