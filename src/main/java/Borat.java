@@ -82,7 +82,7 @@ public class Borat {
             String desc = parts[0].trim();
             String deadline = parts[1].trim();
 
-            return new String[] {desc, deadline}; // have to fix this one
+            return new String[] {desc, deadline};
         } else if (num == 3) {
             String[] parts = rest.split("\\s*/from\\s*|\\s*/to\\s*", num);
 
