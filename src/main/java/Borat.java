@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Borat {
 
+    // test
+
     private static final List<Task> currList = new ArrayList<>();
 
     public static void main(String[] args) throws BoratExceptions {
