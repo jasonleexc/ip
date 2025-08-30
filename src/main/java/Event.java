@@ -14,7 +14,13 @@ public class Event extends Task {
     }
 
     @Override
+    public String toFileString() {
+        return "E | " + super.toFileString() + " | " + start + " | " + end;
+    }
+
+    @Override
     public String toString() {
         return "[" + this.getType() + "]" + "[" + (isDone ? "X" : " ") + "] " + description + " (from: " + start + " to: " + end + ")";
     }
 }
+

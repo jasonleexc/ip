@@ -13,4 +13,7 @@ public abstract class Task {
 
     public abstract String getType();
 
+    public String toFileString() {
+        return (isDone ? "1" : "0") + " | " + description;
+    }
 }
