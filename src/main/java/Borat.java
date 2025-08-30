@@ -4,9 +4,7 @@ import java.util.List;
 
 public class Borat {
 
-    // test
-
-    private static final List<Task> currList = new ArrayList<>();
+    private static final List<Task> currList = Storage.load();
 
     public static void main(String[] args) throws BoratExceptions {
         greet();
@@ -24,48 +22,55 @@ public class Borat {
         String command;
 
         while (true) {
-            command = sc.nextLine().trim();
-            String[] split = command.split("\\s", 2);
-            String firstWord = split[0];
-            String description = split.length > 1 ? split[1] : "";
+            try {
+                command = sc.nextLine().trim();
+                String[] split = command.split("\\s", 2);
+                String firstWord = split[0];
+                String description = split.length > 1 ? split[1] : "";
 
-            // handle exceptions
-            if (command.length() == 1) {
-                System.out.println("Command has no description!");
-            }
-            if (command.equals("bye")) {
-                break;
-            } else if (command.equals("list")) {
-                listItems();
-            } else if (firstWord.equals("mark") || firstWord.equals("unmark")) {
-                taskMarker(split);
-            } else if (firstWord.equals("todo")) {
-                if (description.isEmpty()) {
-                    throw new BoratExceptions("Command cannot be empty!");
+                // handle exceptions
+                if (command.equals("bye")) {
+                    break;
+                } else if (command.equals("list")) {
+                    listItems();
+                } else if (firstWord.equals("mark") || firstWord.equals("unmark")) {
+                    taskMarker(split);
+                    Storage.save(currList);
+                } else if (firstWord.equals("todo")) {
+                    if (description.isEmpty()) {
+                        throw new BoratExceptions("Command cannot be empty!");
+                    }
+                    currList.add(new ToDo(description));
+                    System.out.println("added: " + description);
+                    System.out.println("Now you have " + currList.size() + " tasks in the list.");
+                    Storage.save(currList);
+                } else if (firstWord.equals("event")) {
+                    String[] lst = splitter(split, 3);
+                    currList.add(new Event(lst[0], lst[1], lst[2]));
+                    System.out.println("added: " + description);
+                    System.out.println("Now you have " + currList.size() + " tasks in the list.");
+                    Storage.save(currList);
+                } else if (firstWord.equals("deadline")) {
+                    String[] lst = splitter(split, 2);
+                    currList.add(new Deadline(lst[0], lst[1]));
+                    System.out.println("added: " + description);
+                    System.out.println("Now you have " + currList.size() + " tasks in the list.");
+                    Storage.save(currList);
+                } else if (firstWord.equals("delete")) {
+                    if (description.isEmpty()) {
+                        throw new BoratExceptions("Please provide a task number to delete.");
+                    }
+                    deleteTask(Integer.parseInt(split[1]));
+                    System.out.println("Noted. I've removed this task: " + description);
+                    System.out.println("Now you have " + currList.size() + " tasks in the list.");
+                    Storage.save(currList);
+                } else {
+                    System.out.println("I don't know what that means.");
                 }
-                currList.add(new ToDo(description));
-                System.out.println("added: " + description);
-                System.out.println("Now you have " + currList.size() + " tasks in the list.");
-            } else if (firstWord.equals("event")) {
-                String[] lst = splitter(split, 3);
-                currList.add(new Event(lst[0], lst[1], lst[2]));
-                System.out.println("added: " + description);
-                System.out.println("Now you have " + currList.size() + " tasks in the list.");
-            } else if (firstWord.equals("deadline")) {
-                String[] lst = splitter(split, 2);
-                currList.add(new Deadline(lst[0], lst[1]));
-                System.out.println("added: " + description);
-                System.out.println("Now you have " + currList.size() + " tasks in the list.");
-            } else if (firstWord.equals("delete")) {
-                if (description.isEmpty()) {
-                    throw new BoratExceptions("Please provide a task number to delete.");
-                }
-                deleteTask(Integer.parseInt(split[1]));
-                System.out.println("Noted. I've removed this task: " + description);
-                System.out.println("Now you have " + currList.size() + " tasks in the list.");
-            } else {
-                System.out.println("I don't know what that means.");
+            } catch (NumberFormatException e) {
+                System.out.println("Please provide a valid number. ");
             }
+
         }
 
         sc.close();
