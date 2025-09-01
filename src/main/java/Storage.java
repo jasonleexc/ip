@@ -8,6 +8,10 @@ import java.util.ArrayList;
 public class Storage {
     private static final Path FILE = Paths.get(".", "data", "borat.txt");
 
+    public Storage(String filePath) {
+        this.filePath = Paths.get(filePath);
+    }
+
     // load existing tasks (empty list if file is missing)
     public static List<Task> load() {
         List<Task> tasks = new ArrayList<>();
