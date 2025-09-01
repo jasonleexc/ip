@@ -1,4 +1,12 @@
+package borat;
+
 import java.util.Scanner;
+
+import borat.exception.BoratExceptions;
+import borat.parser.Parser;
+import borat.storage.Storage;
+import borat.task.TaskList;
+import borat.ui.UI;
 
 public class Borat {
 
@@ -73,3 +81,5 @@ public class Borat {
         sc.close();
     }
 }
+
+

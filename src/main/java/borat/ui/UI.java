@@ -1,3 +1,5 @@
+package borat.ui;
+
 import java.util.Scanner;
 
 public class UI {
@@ -28,3 +30,5 @@ public class UI {
     }
 
 }
+
+
