@@ -1,7 +1,6 @@
 public class Deadline extends Task {
 
     private final String end;
-    private String type;
 
     public Deadline(String description, String end) {
         super(description);
@@ -20,6 +19,6 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[" + this.getType() + "]" + "[" + (isDone ? "X" : " ") + "] " + description + " (by: " + end + ")";
+        return super.toString() + " (by: " + end + ")";
     }
 }

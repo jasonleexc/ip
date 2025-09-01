@@ -1,62 +1,72 @@
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.List;
 
 public class Borat {
 
-    private UI Ui;
-    private Storage storage;
-    private TaskList tasks;
-    private Parser parser;
+    private final UI ui;
+    private final Storage storage;
+    private final TaskList tasks;
+    private final Parser parser;
 
     public Borat(String filePath) {
-        this.Ui = new Ui();
+        this.ui = new UI();
         this.storage = new Storage(filePath);
         this.parser = new Parser();
-        try {
-            // load existing tasks from storage file
-            this.tasks = new TaskList(storage.load());
-        } catch (BoratExceptions e) {
-            ui.showError("Error loading tasks: " + e.getMessage());
-            this.tasks = new TaskList();
-        }
+        // load existing tasks from storage file
+        this.tasks = new TaskList(storage.load());
     }
 
     public static void main(String[] args) throws BoratExceptions {
         new Borat("data/tasks.txt").run();
     }
 
-    private static void run() throws BoratExceptions {
+    private void run() {
         ui.greet();
-        boolean isExit() = false;
+        boolean isExit = false;
         Scanner sc = new Scanner(System.in);
-        String command;
 
         while (!isExit) {
             try {
                 String fullCommand = ui.readCommand();
-                String command = parser.parseCommand(fullCommand);
+                String[] parsedCommand = parser.parseCommand(fullCommand);
+                String firstWord = parsedCommand[0];
+                String description = parsedCommand[1];
 
-                if (command.equals("bye")) {
+                if (firstWord.equals("bye")) {
                     ui.exit();
-                } else if (command.equals("list")) {
+                    isExit = true;
+                } else if (firstWord.equals("list")) {
                     tasks.listItems();
                 } else if (firstWord.equals("mark") || firstWord.equals("unmark")) {
-                    tasks.taskMarker(split);
-                    Storage.save(currList);
+                    String[] words = {firstWord, description};
+                    tasks.markTask(words);
                 } else if (firstWord.equals("todo")) {
-                    tasks.addToDo(description, ui);
+                    tasks.addToDo(description);
                 } else if (firstWord.equals("event")) {
-                    tasks.addEvent(description, ui);
+                    try {
+                        String[] eventParts = parser.parseEvent(description);
+                        tasks.addEvent(eventParts[0], eventParts[1], eventParts[2]);
+                    } catch (IllegalArgumentException e) {
+                        ui.showError(e.getMessage());
+                    }
                 } else if (firstWord.equals("deadline")) {
-                    tasks.addDeadline(description, ui);
+                    try {
+                        String[] deadlineParts = parser.parseDeadline(description);
+                        tasks.addDeadline(deadlineParts[0], deadlineParts[1]);
+                    } catch (IllegalArgumentException e) {
+                        ui.showError(e.getMessage());
+                    }
                 } else if (firstWord.equals("delete")) {
-                    tasks.delete(description, ui);
+                    tasks.delete(description);
                 } else {
-                   ui.showError("I don't know what that means. ");
+                   ui.showError("I don't know what that means.");
                 }
+                
+                // save tasks once complete
+                storage.save(tasks.getTasks());
             } catch (NumberFormatException e) {
-                ui.showError("Please provide a valid number. ");
+                ui.showError("Please provide a valid number.");
+            } catch (Exception e) {
+                ui.showError("An error occurred: " + e.getMessage());
             }
         }
 
