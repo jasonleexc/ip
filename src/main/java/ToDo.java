@@ -1,5 +1,4 @@
 public class ToDo extends Task {
-    private String type;
 
     public ToDo(String description) {
         super(description);
@@ -17,7 +16,7 @@ public class ToDo extends Task {
 
     @Override
     public String toString() {
-        return "[" + this.getType() + "]" + "[" + (isDone ? "X" : " ") + "] " + description;
+        return super.toString();
     }
 
 }

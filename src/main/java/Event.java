@@ -20,7 +20,7 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[" + this.getType() + "]" + "[" + (isDone ? "X" : " ") + "] " + description + " (from: " + start + " to: " + end + ")";
+        return super.toString() + " (from: " + start + " to: " + end + ")";
     }
 }
 

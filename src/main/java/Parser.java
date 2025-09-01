@@ -1,43 +1,66 @@
-
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Parser {
 
     public String[] parseCommand(String command) {
-        parts = command.nextLine().trim();
-        String[] split = parts.split("\\s", 2);
+        String[] split = command.trim().split("\\s", 2);
         String firstWord = split[0];
         String description = split.length > 1 ? split[1] : "";
 
-        if (firstWord.equals("deadline")) {
-            String[] deadlineTask = parseDeadlineOrEvent(description, 2);
-        } else if (firstWord.equals("event")) {
-            String[] eventTask = parseDeadlineOrEvent(description, 3);
-        }
-
-        // for base ToDo task
         return new String[] {firstWord, description};
     }
 
-    private static String[] parseDeadlineOrEvent(String cmd, int num) {
-
-        if (num == 2) {
-            String[] parts = cmd.split("/by", num);
-            String desc = parts[0].trim();
-            String deadline = parts[1].trim();
-
-            return new String[] {desc, deadline};
-        } else if (num == 3) {
-            String[] parts = cmd.split("\\s*/from\\s*|\\s*/to\\s*", num);
-
-            String desc = parts[0].trim();
-            String start = parts[1].trim();
-            String end = parts[2].trim();
-
-            return new String[] {desc, start, end};
+    public String[] parseDeadline(String description) {
+        String[] parts = description.split("/by", 2);
+        // handle exception
+        if (parts.length != 2) {
+            throw new IllegalArgumentException("Deadline command must include /by followed by date and time");
         }
-
-        throw new IllegalArgumentException("num must be 2 or 3");
-
+        
+        String desc = parts[0].trim();
+        String dateTimeStr = parts[1].trim();
+        
+        try {
+            LocalDateTime deadline = parseDateTime(dateTimeStr);
+            String formattedDeadline = formatDateTime(deadline);
+            return new String[] {desc, formattedDeadline};
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Invalid date/time format. Use format: d/M/yyyy HHmm (e.g., 2/12/2019 1800)");
+        }
     }
 
+    public String[] parseEvent(String description) {
+        String[] parts = description.split("\\s*/from\\s*|\\s*/to\\s*", 3);
+        // handle exception
+        if (parts.length != 3) {
+            throw new IllegalArgumentException("Event command must include /from and /to followed by date and time");
+        }
+        
+        String desc = parts[0].trim();
+        String startStr = parts[1].trim();
+        String endStr = parts[2].trim();
+        
+        try {
+            LocalDateTime start = parseDateTime(startStr);
+            LocalDateTime end = parseDateTime(endStr);
+            String formattedStart = formatDateTime(start);
+            String formattedEnd = formatDateTime(end);
+            return new String[] {desc, formattedStart, formattedEnd};
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Invalid date/time format. Use format: d/M/yyyy HHmm (e.g., 2/12/2019 1800)");
+        }
+    }
+
+    private LocalDateTime parseDateTime(String dateTimeString) throws DateTimeParseException {
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+        return LocalDateTime.parse(dateTimeString, inputFormatter);
+    }
+
+    private String formatDateTime(LocalDateTime dateTime) {
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm");
+        return dateTime.format(outputFormatter);
+    }
 }

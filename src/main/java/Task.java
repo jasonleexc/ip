@@ -16,4 +16,9 @@ public abstract class Task {
     public String toFileString() {
         return (isDone ? "1" : "0") + " | " + description;
     }
+
+    @Override
+    public String toString() {
+        return "[" + this.getType() + "][" + (isDone ? "X" : " ") + "] " + description;
+    }
 }
