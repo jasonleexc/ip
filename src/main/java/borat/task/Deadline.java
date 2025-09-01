@@ -1,3 +1,5 @@
+package borat.task;
+
 public class Deadline extends Task {
 
     private final String end;
@@ -22,3 +24,5 @@ public class Deadline extends Task {
         return super.toString() + " (by: " + end + ")";
     }
 }
+
+

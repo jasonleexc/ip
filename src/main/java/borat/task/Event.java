@@ -1,3 +1,5 @@
+package borat.task;
+
 public class Event extends Task {
     private String start;
     private String end;
@@ -23,4 +25,5 @@ public class Event extends Task {
         return super.toString() + " (from: " + start + " to: " + end + ")";
     }
 }
+
 
