@@ -1,0 +1,64 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+group = 'borat'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.10.0'
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.10.0'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+application {
+    mainClass = 'borat.Borat'
+}
+
+// Shadow plugin configuration for creating executable JAR
+shadowJar {
+    archiveFileName = 'borat.jar'
+    manifest {
+        attributes 'Main-Class': 'borat.Borat'
+    }
+}
+
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+
+        showExceptions true
+        exceptionFormat "full"
+        showCauses true
+        showStackTraces true
+        showStandardStreams = false
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'borat.Borat'
+    }
+}
+
+// Ensure the gradle wrapper is executable
+tasks.register('makeWrapperExecutable') {
+    doLast {
+        file('gradlew').setExecutable(true)
+    }
+}
+
+// Run this task after wrapper setup
+wrapper.finalizedBy makeWrapperExecutable

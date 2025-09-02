@@ -1,0 +1,51 @@
+package borat.task;
+
+/**
+ * Base type for all tasks maintained by the application.
+ */
+public abstract class Task {
+    protected final String description;
+    protected boolean isDone;
+
+    /**
+     * Constructs a task with the given description, initially not done.
+     *
+     * @param description human-readable task details
+     */
+    Task (String description) {
+        this.description = description;
+        this.isDone = false;
+    }
+
+    /**
+     * Sets the completion flag of this task.
+     *
+     * @param bool true if done, false otherwise
+     */
+    public void setDone(boolean bool) {
+        this.isDone = bool;
+    }
+
+    /**
+     * Returns the short type code used for display and persistence.
+     *
+     * @return type code string
+     */
+    public abstract String getType();
+
+    /**
+     * Returns the file persistence representation for this task.
+     *
+     * @return serialized form for storage
+     */
+    public String toFileString() {
+        return (isDone ? "1" : "0") + " | " + description;
+    }
+
+    @Override
+    public String toString() {
+        return "[" + this.getType() + "][" + (isDone ? "X" : " ") + "] " + description;
+    }
+}
+
+
