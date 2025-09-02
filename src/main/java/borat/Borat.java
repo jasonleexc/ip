@@ -1,7 +1,5 @@
 package borat;
 
-import java.util.Scanner;
-
 import borat.exception.BoratExceptions;
 import borat.parser.Parser;
 import borat.storage.Storage;
@@ -9,7 +7,7 @@ import borat.task.TaskList;
 import borat.ui.UI;
 
 /**
- * Entry point and main application loop for Borat.
+ * Runs the Borat application and coordinates command processing.
  */
 public class Borat {
 
@@ -19,9 +17,9 @@ public class Borat {
     private final Parser parser;
 
     /**
-     * Constructs a Borat instance using the provided storage file path.
+     * Creates a new Borat instance using the given storage file path.
      *
-     * @param filePath path to the tasks data file used for load/save
+     * @param filePath Path to the tasks data file.
      */
     public Borat(String filePath) {
         this.ui = new UI();
@@ -32,23 +30,21 @@ public class Borat {
     }
 
     /**
-     * Application entry point.
+     * Starts the application.
      *
-     * @param args command line arguments (unused)
-     * @throws BoratExceptions if startup fails
+     * @param args Command line arguments (unused).
+     * @throws BoratExceptions If startup fails.
      */
     public static void main(String[] args) throws BoratExceptions {
         new Borat("data/tasks.txt").run();
     }
 
     /**
-     * Runs the main REPL loop: reads commands, parses them, executes actions,
-     * and persists the task list after each successful command.
+     * Runs the main loop: reads, parses, executes commands and saves tasks.
      */
     private void run() {
         ui.greet();
         boolean isExit = false;
-        Scanner sc = new Scanner(System.in);
 
         while (!isExit) {
             try {
@@ -96,7 +92,6 @@ public class Borat {
             }
         }
 
-        sc.close();
     }
 }
 

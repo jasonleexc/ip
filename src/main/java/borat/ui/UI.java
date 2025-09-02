@@ -9,8 +9,10 @@ public class UI {
 
     private final Scanner in;
 
-    public static final String WELCOMEMESSAGE = "Hello! I'm Borat.\nWhat can I do for you?";
-    public static final String GOODBYEMESSAGE = "Bye. Hope to see you again soon!";
+    /** Welcome message shown at startup. */
+    public static final String WELCOME_MESSAGE = "Hello! I'm Borat.\nWhat can I do for you?";
+    /** Goodbye message shown on exit. */
+    public static final String GOODBYE_MESSAGE = "Bye. Hope to see you again soon!";
 
     /**
      * Creates a UI instance backed by a {@link Scanner} reading System.in.
@@ -32,14 +34,14 @@ public class UI {
      * Prints the welcome message.
      */
     public void greet() {
-        System.out.println(WELCOMEMESSAGE);
+        System.out.println(WELCOME_MESSAGE);
     }
 
     /**
      * Prints the goodbye message.
      */
     public void exit() {
-        System.out.println(GOODBYEMESSAGE);
+        System.out.println(GOODBYE_MESSAGE);
     }
 
     /**

@@ -8,9 +8,9 @@ public abstract class Task {
     protected boolean isDone;
 
     /**
-     * Constructs a task with the given description, initially not done.
+     * Creates a task with the given description, initially not done.
      *
-     * @param description human-readable task details
+     * @param description Human-readable description.
      */
     Task (String description) {
         this.description = description;
@@ -18,26 +18,16 @@ public abstract class Task {
     }
 
     /**
-     * Sets the completion flag of this task.
+     * Sets whether this task is done.
      *
-     * @param bool true if done, false otherwise
+     * @param isDone True if completed, false otherwise.
      */
-    public void setDone(boolean bool) {
-        this.isDone = bool;
+    public void setDone(boolean isDone) {
+        this.isDone = isDone;
     }
 
-    /**
-     * Returns the short type code used for display and persistence.
-     *
-     * @return type code string
-     */
     public abstract String getType();
 
-    /**
-     * Returns the file persistence representation for this task.
-     *
-     * @return serialized form for storage
-     */
     public String toFileString() {
         return (isDone ? "1" : "0") + " | " + description;
     }
