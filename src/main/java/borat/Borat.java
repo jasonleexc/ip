@@ -63,6 +63,8 @@ public class Borat {
                     } catch (IllegalArgumentException e) {
                         ui.showError(e.getMessage());
                     }
+                } else if (firstWord.equals("find")) {
+                    tasks.find(description);
                 } else if (firstWord.equals("delete")) {
                     tasks.delete(description);
                 } else {

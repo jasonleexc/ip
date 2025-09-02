@@ -5,6 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import static org.junit.jupiter.api.Assertions.*;
 import borat.exception.BoratExceptions;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 
 public class TaskListTest {
 
@@ -200,5 +203,46 @@ public class TaskListTest {
         
         taskList.delete("1");
         assertTrue(taskList.getTasks().isEmpty());
+    }
+
+    @Test
+    @DisplayName("Test find prints matching tasks")
+    void testFindWithMatches() throws BoratExceptions {
+        taskList.addToDo("read book");
+        taskList.addDeadline("return book", "June 6th");
+        taskList.addToDo("write report");
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PrintStream original = System.out;
+        System.setOut(new PrintStream(out));
+        try {
+            taskList.find("book");
+        } finally {
+            System.setOut(original);
+        }
+
+        String output = out.toString(StandardCharsets.UTF_8);
+        assertTrue(output.contains("Here are the matching tasks in your list:"));
+        assertTrue(output.contains("read book"));
+        assertTrue(output.contains("return book"));
+    }
+
+    @Test
+    @DisplayName("Test find prints no matches message")
+    void testFindNoMatches() throws BoratExceptions {
+        taskList.addToDo("read book");
+        taskList.addToDo("write report");
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PrintStream original = System.out;
+        System.setOut(new PrintStream(out));
+        try {
+            taskList.find("xyz");
+        } finally {
+            System.setOut(original);
+        }
+
+        String output = out.toString(StandardCharsets.UTF_8);
+        assertTrue(output.contains("No matching tasks found"));
     }
 }
