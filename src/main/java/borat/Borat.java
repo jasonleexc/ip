@@ -8,6 +8,9 @@ import borat.storage.Storage;
 import borat.task.TaskList;
 import borat.ui.UI;
 
+/**
+ * Entry point and main application loop for Borat.
+ */
 public class Borat {
 
     private final UI ui;
@@ -15,6 +18,11 @@ public class Borat {
     private final TaskList tasks;
     private final Parser parser;
 
+    /**
+     * Constructs a Borat instance using the provided storage file path.
+     *
+     * @param filePath path to the tasks data file used for load/save
+     */
     public Borat(String filePath) {
         this.ui = new UI();
         this.storage = new Storage(filePath);
@@ -23,10 +31,20 @@ public class Borat {
         this.tasks = new TaskList(storage.load());
     }
 
+    /**
+     * Application entry point.
+     *
+     * @param args command line arguments (unused)
+     * @throws BoratExceptions if startup fails
+     */
     public static void main(String[] args) throws BoratExceptions {
         new Borat("data/tasks.txt").run();
     }
 
+    /**
+     * Runs the main REPL loop: reads commands, parses them, executes actions,
+     * and persists the task list after each successful command.
+     */
     private void run() {
         ui.greet();
         boolean isExit = false;

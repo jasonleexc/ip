@@ -1,53 +1,17 @@
-# Gradle
-.gradle/
-build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
+# IDEA files
+/.idea/
+/out/
+/*.iml
 
-# IntelliJ IDEA
-.idea/
-*.iml
-*.ipr
-*.iws
+# Gradle build files
+/.gradle/
+/build/
+src/main/resources/docs/
 
-# Eclipse
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-# NetBeans
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-
-# VS Code
-.vscode/
-
-# Mac
+# MacOS custom attributes files created by Finder
 .DS_Store
+*.iml
+bin/
 
-# Windows
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-
-# Java
-*.class
-*.log
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
-
-# Data files
-data/
+/text-ui-test/ACTUAL.TXT
+text-ui-test/EXPECTED-UNIX.TXT
