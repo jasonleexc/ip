@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group = 'borat'
@@ -22,6 +23,14 @@ java {
 
 application {
     mainClass = 'borat.Borat'
+}
+
+// Shadow plugin configuration for creating executable JAR
+shadowJar {
+    archiveFileName = 'borat.jar'
+    manifest {
+        attributes 'Main-Class': 'borat.Borat'
+    }
 }
 
 test {
