@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'borat'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+application {
+    mainClass = 'borat.Borat'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'borat.Borat'
+    }
+}
+
+// Ensure the gradle wrapper is executable
+tasks.register('makeWrapperExecutable') {
+    doLast {
+        file('gradlew').setExecutable(true)
+    }
+}
+
+// Run this task after wrapper setup
+wrapper.finalizedBy makeWrapperExecutable

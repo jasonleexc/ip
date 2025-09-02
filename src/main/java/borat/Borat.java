@@ -74,7 +74,7 @@ public class Borat {
             } catch (NumberFormatException e) {
                 ui.showError("Please provide a valid number.");
             } catch (Exception e) {
-                ui.showError("An error occurred: " + e.getMessage());
+                ui.showError(e.getMessage());
             }
         }
 
