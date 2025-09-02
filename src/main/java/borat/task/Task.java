@@ -36,6 +36,15 @@ public abstract class Task {
     public String toString() {
         return "[" + this.getType() + "][" + (isDone ? "X" : " ") + "] " + description;
     }
+
+    /**
+     * Returns task description.
+     *
+     * @return Task description.
+     */
+    public String getDescription() {
+        return description;
+    }
 }
 
 
