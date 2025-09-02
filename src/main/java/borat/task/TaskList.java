@@ -88,13 +88,6 @@ public class TaskList {
         }
     }
 
-    public int size() {
-        return tasks.size();
-    }
-
-    public boolean isEmpty() {
-        return tasks.isEmpty();
-    }
 }
 
 
