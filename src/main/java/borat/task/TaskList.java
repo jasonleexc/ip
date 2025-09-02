@@ -53,7 +53,7 @@ public class TaskList {
     }
 
     public void addToDo(String description) throws BoratExceptions {
-        if (description.isEmpty()) {
+        if (description == null || description.isEmpty()) {
             throw new BoratExceptions("Command cannot be empty!");
         }
         tasks.add(new ToDo(description));
