@@ -5,21 +5,42 @@ import java.util.List;
 
 import borat.exception.BoratExceptions;
 
+/**
+ * Mutable collection of {@link Task} with helper operations used by commands.
+ */
 public class TaskList {
     private final List<Task> tasks;
 
+    /**
+     * Creates an empty task list.
+     */
     public TaskList() {
         this.tasks = new ArrayList<>();
     }
 
+    /**
+     * Wraps an existing list of tasks.
+     *
+     * @param tasks initial tasks
+     */
     public TaskList(List<Task> tasks) {
         this.tasks = tasks;
     }
 
+    /**
+     * Returns the underlying mutable list of tasks.
+     *
+     * @return task list
+     */
     public List<Task> getTasks() {
         return tasks;
     }
 
+    /**
+     * Marks or unmarks a task at the given 1-based index, printing status.
+     *
+     * @param words array containing command and index.
+     */
     public void markTask(String[] words) {
         try {
             int index = Integer.parseInt(words[1]) - 1;
@@ -41,6 +62,9 @@ public class TaskList {
         }
     }
 
+    /**
+     * Prints the task list to standard output.
+     */
     public void listItems() {
         System.out.println("Here are the tasks in your list:");
         if (tasks.isEmpty()) {
@@ -52,8 +76,14 @@ public class TaskList {
         }
     }
 
+    /**
+     * Adds a ToDo task.
+     *
+     * @param description task description (must be non-empty)
+     * @throws BoratExceptions if description is empty
+     */
     public void addToDo(String description) throws BoratExceptions {
-        if (description == null || description.isEmpty()) {
+        if (description.isEmpty()) {
             throw new BoratExceptions("Command cannot be empty!");
         }
         tasks.add(new ToDo(description));
@@ -61,18 +91,37 @@ public class TaskList {
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
     }
 
+    /**
+     * Adds an Event task.
+     *
+     * @param description description text
+     * @param start formatted start time
+     * @param end formatted end time
+     */
     public void addEvent(String description, String start, String end) {
         tasks.add(new Event(description, start, end));
         System.out.println("added: " + description);
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
     }
 
+    /**
+     * Adds a Deadline task.
+     *
+     * @param description description text
+     * @param deadline formatted due date/time
+     */
     public void addDeadline(String description, String deadline) {
         tasks.add(new Deadline(description, deadline));
         System.out.println("added: " + description);
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
     }
 
+    /**
+     * Deletes a task by 1-based index.
+     *
+     * @param index index string from user input
+     * @throws BoratExceptions if the index is invalid or out of bounds
+     */
     public void delete(String index) throws BoratExceptions {
         try {
             int taskIndex = Integer.parseInt(index) - 1;

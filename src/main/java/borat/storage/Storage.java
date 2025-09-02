@@ -12,14 +12,27 @@ import borat.task.ToDo;
 import borat.task.Deadline;
 import borat.task.Event;
 
+/**
+ * Loads tasks to and from a plain-text file.
+ */
 public class Storage {
     private final Path filePath;
 
+    /**
+     * Creates a storage instance in the given file path.
+     *
+     * @param filePath path to the data file
+     */
     public Storage(String filePath) {
         this.filePath = Paths.get(filePath);
     }
 
-    // load existing tasks (empty list if file is missing)
+    /**
+     * Loads existing tasks from disk. Returns an empty list if the file is
+     * missing or unreadable.
+     *
+     * @return list of tasks read from file
+     */
     public List<Task> load() {
         List<Task> tasks = new ArrayList<>();
         try {
@@ -39,7 +52,12 @@ public class Storage {
         return tasks;
     }
 
-    // save current tasks to file
+    /**
+     * Saves the provided tasks to the backing file, creating parent
+     * directories as needed.
+     *
+     * @param tasks tasks to persist
+     */
     public void save(List<Task> tasks) {
         List<String> lines = new ArrayList<>();
         try {
@@ -54,6 +72,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Parses a single line from the data file into a {@link Task}.
+     * Lines follow the format produced by each task's {@code toFileString()}.
+     *
+     * @param line raw line from file
+     * @return parsed Task or null if the line is malformed
+     */
     private Task parseTaskFromFile(String line) {
         try {
             String[] parts = line.split(" \\| ");
