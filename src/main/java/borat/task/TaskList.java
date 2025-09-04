@@ -3,7 +3,7 @@ package borat.task;
 import java.util.ArrayList;
 import java.util.List;
 
-import borat.exception.BoratExceptions;
+import borat.exception.BoratException;
 
 public class TaskList {
     private final List<Task> tasks;
@@ -20,57 +20,72 @@ public class TaskList {
         return tasks;
     }
 
-    public void markTask(String[] words) {
+    public String markTask(String[] words) {
+        StringBuilder currString = new StringBuilder();
         try {
             int index = Integer.parseInt(words[1]) - 1;
             Task task = tasks.get(index);
 
             if (words[0].equals("mark")) {
                 task.setDone(true);
-                System.out.println("Nice! I've marked this task as done:");
+                currString.append("Nice! I've marked this task as done:");
             } else {
                 task.setDone(false);
-                System.out.println("Ok, I've marked this task as not done yet:");
+                currString.append("Ok, I've marked this task as not done yet:");
             }
-
-            System.out.println(" " + task.toString());
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Invalid task number!");
         } catch (NumberFormatException e) {
             System.out.println("Please provide a valid task number!");
         }
+
+        return currString.toString();
     }
 
-    public void listTasks() {
-        System.out.println("Here are the tasks in your list:");
+    public String listTasks() {
+        StringBuilder currString = new StringBuilder("Here are the tasks in your list:\n");
         if (tasks.isEmpty()) {
-            System.out.println("No items yet");
+            currString.append("No items yet.");
         } else {
             for (int i = 0; i < tasks.size(); i++) {
-                System.out.println((i + 1) + "." + tasks.get(i));
+                currString.append(i + 1).append('.').append(tasks.get(i)).append('\n');
             }
         }
+
+        return currString.toString();
     }
 
-    public void addToDo(String description) throws BoratExceptions {
+    public String addToDo(String description) throws BoratException {
+        StringBuilder currString = new StringBuilder();
+
         if (description == null || description.isEmpty()) {
-            throw new BoratExceptions("Command cannot be empty!");
+            throw new BoratException("Command cannot be empty!");
         }
         tasks.add(new ToDo(description));
-        System.out.println("added: " + description);
-        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+        currString.append("added: ").append(description).append(".\n");
+        currString.append("Now you have ").append(tasks.size()).append(" tasks in the list.");
+
+        return currString.toString();
     }
 
-    public void addEvent(String description, String start, String end) {
+    public String addEvent(String description, String start, String end) {
+        StringBuilder currString = new StringBuilder();
+
         tasks.add(new Event(description, start, end));
-        System.out.println("added: " + description);
-        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+        currString.append("added: ").append(description);
+        currString.append("Now you have ").append(tasks.size()).append(" tasks in the list.");
+
+        return currString.toString();
     }
 
-    public void addDeadline(String description, String deadline) {
+    public String addDeadline(String description, String deadline) {
+        StringBuilder currString = new StringBuilder();
+
         tasks.add(new Deadline(description, deadline));
-        System.out.println("added: " + description);
-        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+        currString.append("added: ").append(description);
+        currString.append("Now you have ").append(tasks.size()).append(" tasks in the list.");
+
+        return currString.toString();
     }
 
     /**
@@ -78,33 +93,41 @@ public class TaskList {
      *
      * @param keyword keyword to search for (case-insensitive)
      */
-    public void find(String keyword) {
-        System.out.println("Here are the matching tasks in your list:");
+    public String find(String keyword) {
+        StringBuilder currString = new StringBuilder();
+
+        currString.append("Here are the matching tasks in your list:");
         String lower = keyword == null ? "" : keyword.toLowerCase();
         int shown = 0;
         for (Task task : tasks) {
             if (task.getDescription().toLowerCase().contains(lower)) {
                 shown++;
-                System.out.println(shown + "." + task.toString());
+                currString.append(shown).append(".").append(task.toString());
             }
         }
         if (shown == 0) {
-            System.out.println("No matching tasks found");
+            currString.append("No matching tasks found");
         }
+
+        return currString.toString();
     }
-    public void delete(String index) throws BoratExceptions {
+    public String delete(String index) throws BoratException {
+        StringBuilder currString = new StringBuilder();
+
         try {
             int taskIndex = Integer.parseInt(index) - 1;
             Task deletedTask = tasks.get(taskIndex);
             tasks.remove(taskIndex);
-            System.out.println("Noted. I've removed this task:");
-            System.out.println(" " + deletedTask.toString());
-            System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+            currString.append("Noted. I've removed this task:");
+            currString.append(" ").append(deletedTask.toString()).append("\n");
+            currString.append("Now you have ").append(tasks.size()).append(" tasks in the list.");
         } catch (NumberFormatException e) {
-            throw new BoratExceptions("Please provide a valid task number to delete.");
+            throw new BoratException("Please provide a valid task number to delete.");
         } catch (IndexOutOfBoundsException e) {
-            throw new BoratExceptions("Task number does not exist.");
+            throw new BoratException("Task number does not exist.");
         }
+
+        return currString.toString();
     }
 
 }

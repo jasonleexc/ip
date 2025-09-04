@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import static org.junit.jupiter.api.Assertions.*;
-import borat.exception.BoratExceptions;
+import borat.exception.BoratException;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
@@ -28,7 +28,7 @@ public class TaskListTest {
 
     @Test
     @DisplayName("Test TaskList with existing tasks")
-    void testTaskListWithExistingTasks() throws BoratExceptions {
+    void testTaskListWithExistingTasks() throws BoratException {
         TaskList existingTaskList = new TaskList();
         existingTaskList.addToDo("Existing task");
         
@@ -39,7 +39,7 @@ public class TaskListTest {
 
     @Test
     @DisplayName("Test adding ToDo task")
-    void testAddToDo() throws BoratExceptions {
+    void testAddToDo() throws BoratException {
         taskList.addToDo("Test todo");
         assertEquals(1, taskList.getTasks().size());
         assertFalse(taskList.getTasks().isEmpty());
@@ -64,14 +64,14 @@ public class TaskListTest {
     @Test
     @DisplayName("Test adding empty ToDo description throws exception")
     void testAddEmptyToDoThrowsException() {
-        assertThrows(BoratExceptions.class, () -> {
+        assertThrows(BoratException.class, () -> {
             taskList.addToDo("");
         });
     }
 
     @Test
     @DisplayName("Test marking task as done")
-    void testMarkTask() throws BoratExceptions {
+    void testMarkTask() throws BoratException {
         taskList.addToDo("Test task");
         String[] markCommand = {"mark", "1"};
         
@@ -84,7 +84,7 @@ public class TaskListTest {
 
     @Test
     @DisplayName("Test unmarking task")
-    void testUnmarkTask() throws BoratExceptions {
+    void testUnmarkTask() throws BoratException {
         taskList.addToDo("Test task");
         String[] unmarkCommand = {"unmark", "1"};
         
@@ -116,7 +116,7 @@ public class TaskListTest {
 
     @Test
     @DisplayName("Test deleting task")
-    void testDeleteTask() throws BoratExceptions {
+    void testDeleteTask() throws BoratException {
         taskList.addToDo("Task to delete");
         assertEquals(1, taskList.getTasks().size());
         
@@ -128,7 +128,7 @@ public class TaskListTest {
     @Test
     @DisplayName("Test deleting task with invalid number")
     void testDeleteInvalidTaskNumber() {
-        assertThrows(BoratExceptions.class, () -> {
+        assertThrows(BoratException.class, () -> {
             taskList.delete("999");
         });
     }
@@ -136,7 +136,7 @@ public class TaskListTest {
     @Test
     @DisplayName("Test deleting task with non-numeric index")
     void testDeleteNonNumericIndex() {
-        assertThrows(BoratExceptions.class, () -> {
+        assertThrows(BoratException.class, () -> {
             taskList.delete("abc");
         });
     }
@@ -144,7 +144,7 @@ public class TaskListTest {
     @Test
     @DisplayName("Test deleting from empty list")
     void testDeleteFromEmptyList() {
-        assertThrows(BoratExceptions.class, () -> {
+        assertThrows(BoratException.class, () -> {
             taskList.delete("1");
         });
     }
@@ -160,7 +160,7 @@ public class TaskListTest {
 
     @Test
     @DisplayName("Test listing items with tasks")
-    void testListTasksWithTasks() throws BoratExceptions {
+    void testListTasksWithTasks() throws BoratException {
         taskList.addToDo("Task 1");
         taskList.addToDo("Task 2");
         
@@ -172,7 +172,7 @@ public class TaskListTest {
 
     @Test
     @DisplayName("Test getTasks returns correct list")
-    void testGetTasks() throws BoratExceptions {
+    void testGetTasks() throws BoratException {
         taskList.addToDo("Task 1");
         taskList.addToDo("Task 2");
         
@@ -183,7 +183,7 @@ public class TaskListTest {
 
     @Test
     @DisplayName("Test getTasks size changes")
-    void testGetTasksSizeChanges() throws BoratExceptions {
+    void testGetTasksSizeChanges() throws BoratException {
         assertEquals(0, taskList.getTasks().size());
         
         taskList.addToDo("Task 1");
@@ -195,7 +195,7 @@ public class TaskListTest {
 
     @Test
     @DisplayName("Test getTasks isEmpty changes")
-    void testGetTasksIsEmptyChanges() throws BoratExceptions {
+    void testGetTasksIsEmptyChanges() throws BoratException {
         assertTrue(taskList.getTasks().isEmpty());
         
         taskList.addToDo("Task 1");
@@ -207,7 +207,7 @@ public class TaskListTest {
 
     @Test
     @DisplayName("Test find prints matching tasks")
-    void testFindWithMatches() throws BoratExceptions {
+    void testFindWithMatches() throws BoratException {
         taskList.addToDo("read book");
         taskList.addDeadline("return book", "June 6th");
         taskList.addToDo("write report");
@@ -229,7 +229,7 @@ public class TaskListTest {
 
     @Test
     @DisplayName("Test find prints no matches message")
-    void testFindNoMatches() throws BoratExceptions {
+    void testFindNoMatches() throws BoratException {
         taskList.addToDo("read book");
         taskList.addToDo("write report");
 

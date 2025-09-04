@@ -40,8 +40,8 @@ public class UI {
     /**
      * Prints the goodbye message.
      */
-    public void exit() {
-        System.out.println(GOODBYE_MESSAGE);
+    public String exit() {
+        return GOODBYE_MESSAGE;
     }
 
     /**
