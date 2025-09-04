@@ -33,7 +33,7 @@ public class Storage {
      *
      * @return list of tasks read from file
      */
-    public List<Task> load() {
+    public List<Task> loadTasks() {
         List<Task> tasks = new ArrayList<>();
         try {
             if (Files.exists(filePath)) {

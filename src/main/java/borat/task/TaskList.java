@@ -41,7 +41,7 @@ public class TaskList {
         }
     }
 
-    public void listItems() {
+    public void listTasks() {
         System.out.println("Here are the tasks in your list:");
         if (tasks.isEmpty()) {
             System.out.println("No items yet");

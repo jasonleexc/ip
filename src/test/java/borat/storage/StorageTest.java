@@ -36,7 +36,7 @@ public class StorageTest {
     @Test
     @DisplayName("Test loading from non-existent file returns empty list")
     void testLoadFromNonExistentFile() {
-        List<Task> tasks = storage.load();
+        List<Task> tasks = storage.loadTasks();
         assertNotNull(tasks);
         assertEquals(0, tasks.size());
     }
@@ -50,7 +50,7 @@ public class StorageTest {
         
         storage.save(tasksToSave);
         
-        List<Task> loadedTasks = storage.load();
+        List<Task> loadedTasks = storage.loadTasks();
         assertEquals(1, loadedTasks.size());
         assertTrue(loadedTasks.get(0) instanceof ToDo);
         assertTrue(loadedTasks.get(0).toString().contains("Test todo"));
@@ -66,7 +66,7 @@ public class StorageTest {
         
         storage.save(tasksToSave);
         
-        List<Task> loadedTasks = storage.load();
+        List<Task> loadedTasks = storage.loadTasks();
         assertEquals(1, loadedTasks.size());
         assertTrue(loadedTasks.get(0) instanceof Deadline);
         assertTrue(loadedTasks.get(0).toString().contains("Test deadline"));
@@ -83,7 +83,7 @@ public class StorageTest {
         
         storage.save(tasksToSave);
         
-        List<Task> loadedTasks = storage.load();
+        List<Task> loadedTasks = storage.loadTasks();
         assertEquals(1, loadedTasks.size());
         assertTrue(loadedTasks.get(0) instanceof Event);
         assertTrue(loadedTasks.get(0).toString().contains("Test event"));
@@ -102,7 +102,7 @@ public class StorageTest {
         
         storage.save(tasksToSave);
         
-        List<Task> loadedTasks = storage.load();
+        List<Task> loadedTasks = storage.loadTasks();
         assertEquals(1, loadedTasks.size());
         assertTrue(loadedTasks.get(0).toString().contains("[X]"));
     }
@@ -121,7 +121,7 @@ public class StorageTest {
         
         storage.save(tasksToSave);
         
-        List<Task> loadedTasks = storage.load();
+        List<Task> loadedTasks = storage.loadTasks();
         assertEquals(2, loadedTasks.size());
         assertTrue(loadedTasks.get(0).toString().contains("[X]"));
         assertTrue(loadedTasks.get(1).toString().contains("[ ]"));
@@ -133,7 +133,7 @@ public class StorageTest {
         List<Task> emptyList = new ArrayList<>();
         storage.save(emptyList);
         
-        List<Task> loadedTasks = storage.load();
+        List<Task> loadedTasks = storage.loadTasks();
         assertEquals(0, loadedTasks.size());
     }
 
@@ -146,7 +146,7 @@ public class StorageTest {
         
         storage.save(tasksToSave);
         
-        List<Task> loadedTasks = storage.load();
+        List<Task> loadedTasks = storage.loadTasks();
         assertEquals(1, loadedTasks.size());
         assertTrue(loadedTasks.get(0).toString().contains("Task with special chars: !@#$%^&*()"));
     }
@@ -163,7 +163,7 @@ public class StorageTest {
         Files.write(corruptedFile, corruptedLines);
         
         Storage corruptedStorage = new Storage(corruptedFile.toString());
-        List<Task> loadedTasks = corruptedStorage.load();
+        List<Task> loadedTasks = corruptedStorage.loadTasks();
         
         // should just load valid tasks and skip invalid ones
         assertEquals(2, loadedTasks.size());
@@ -176,7 +176,7 @@ public class StorageTest {
         Files.createFile(emptyFile);
         
         Storage emptyStorage = new Storage(emptyFile.toString());
-        List<Task> loadedTasks = emptyStorage.load();
+        List<Task> loadedTasks = emptyStorage.loadTasks();
         
         assertEquals(0, loadedTasks.size());
     }

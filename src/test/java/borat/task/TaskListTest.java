@@ -151,22 +151,22 @@ public class TaskListTest {
 
     @Test
     @DisplayName("Test listing items when empty")
-    void testListItemsEmpty() {
+    void testListTasksEmpty() {
         // should just print "No items yet"
         assertDoesNotThrow(() -> {
-            taskList.listItems();
+            taskList.listTasks();
         });
     }
 
     @Test
     @DisplayName("Test listing items with tasks")
-    void testListItemsWithTasks() throws BoratExceptions {
+    void testListTasksWithTasks() throws BoratExceptions {
         taskList.addToDo("Task 1");
         taskList.addToDo("Task 2");
         
         // should not throw exception
         assertDoesNotThrow(() -> {
-            taskList.listItems();
+            taskList.listTasks();
         });
     }
 

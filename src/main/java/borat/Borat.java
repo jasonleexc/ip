@@ -26,7 +26,7 @@ public class Borat {
         this.storage = new Storage(filePath);
         this.parser = new Parser();
         // load existing tasks from storage file
-        this.tasks = new TaskList(storage.load());
+        this.tasks = new TaskList(storage.loadTasks());
     }
 
     /**
@@ -57,7 +57,7 @@ public class Borat {
                     ui.exit();
                     isExit = true;
                 } else if (firstWord.equals("list")) {
-                    tasks.listItems();
+                    tasks.listTasks();
                 } else if (firstWord.equals("mark") || firstWord.equals("unmark")) {
                     String[] words = {firstWord, description};
                     tasks.markTask(words);
