@@ -22,11 +22,19 @@ public class Borat {
      * @param filePath Path to the tasks data file.
      */
     public Borat(String filePath) {
+        assert filePath != null : "File path cannot be null";
+        assert !filePath.trim().isEmpty() : "File path cannot be empty";
+        
         this.ui = new UI();
         this.storage = new Storage(filePath);
         this.parser = new Parser();
         // load existing tasks from storage file
         this.tasks = new TaskList(storage.loadTasks());
+        
+        assert this.ui != null : "UI must be initialized";
+        assert this.storage != null : "Storage must be initialized";
+        assert this.parser != null : "Parser must be initialized";
+        assert this.tasks != null : "TaskList must be initialized";
     }
 
     /**
@@ -70,11 +78,19 @@ public class Borat {
      * @return response text
      */
     public String getResponse(String fullCommand) {
+        assert fullCommand != null : "Command cannot be null";
+        
         StringBuilder currResponse = new StringBuilder();
         try {
             String[] parsedCommand = parser.parseCommand(fullCommand);
+            assert parsedCommand != null : "Parser must return non-null result";
+            assert parsedCommand.length == 2 : "Parser must return exactly 2 elements";
+            
             String firstWord = parsedCommand[0];
             String description = parsedCommand[1];
+            
+            assert firstWord != null : "First word cannot be null";
+            assert !firstWord.trim().isEmpty() : "First word cannot be empty";
 
             switch (firstWord) {
                 case "bye":
@@ -121,7 +137,10 @@ public class Borat {
             ui.showError(e.getMessage());
         }
 
-        return currResponse.toString();
+        assert currResponse != null : "Response builder must not be null";
+        String result = currResponse.toString();
+        assert result != null : "Response string must not be null";
+        return result;
     }
 }
 
