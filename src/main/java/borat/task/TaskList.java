@@ -10,13 +10,11 @@ public class TaskList {
 
     public TaskList() {
         this.tasks = new ArrayList<>();
-        assert this.tasks != null : "Task list must be initialized";
     }
 
     public TaskList(List<Task> tasks) {
         assert tasks != null : "Task list parameter cannot be null";
         this.tasks = tasks;
-        assert this.tasks != null : "Task list must be initialized";
     }
 
     public List<Task> getTasks() {
@@ -133,7 +131,7 @@ public class TaskList {
         for (Task task : tasks) {
             if (task.getDescription().toLowerCase().contains(lower)) {
                 shown++;
-                currString.append(shown).append(".").append(task.toString());
+                currString.append(shown).append(".").append(task);
             }
         }
         if (shown == 0) {
@@ -160,7 +158,7 @@ public class TaskList {
             assert tasks.size() == initialSize - 1 : "Task list size must decrease by 1";
             
             currString.append("Noted. I've removed this task:");
-            currString.append(" ").append(deletedTask.toString()).append("\n");
+            currString.append(" ").append(deletedTask).append("\n");
             currString.append("Now you have ").append(tasks.size()).append(" tasks in the list.");
         } catch (NumberFormatException e) {
             throw new BoratException("Please provide a valid task number to delete.");

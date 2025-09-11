@@ -91,20 +91,24 @@ public class Storage {
             String description = parts[2];
             
             Task task = null;
-            
-            if (taskType.equals("T")) {
-                task = new ToDo(description);
-            } else if (taskType.equals("D")) {
-                if (parts.length >= 4) {
-                    String deadline = parts[3];
-                    task = new Deadline(description, deadline);
-                }
-            } else if (taskType.equals("E")) {
-                if (parts.length >= 5) {
-                    String start = parts[3];
-                    String end = parts[4];
-                    task = new Event(description, start, end);
-                }
+
+            switch (taskType) {
+                case "T":
+                    task = new ToDo(description);
+                    break;
+                case "D":
+                    if (parts.length >= 4) {
+                        String deadline = parts[3];
+                        task = new Deadline(description, deadline);
+                    }
+                    break;
+                case "E":
+                    if (parts.length >= 5) {
+                        String start = parts[3];
+                        String end = parts[4];
+                        task = new Event(description, start, end);
+                    }
+                    break;
             }
             
             if (task != null && isDone) {
