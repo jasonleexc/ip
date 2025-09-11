@@ -2,6 +2,9 @@ package borat.task;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import borat.exception.BoratException;
 
@@ -92,7 +95,16 @@ public class TaskList {
         StringBuilder currString = new StringBuilder();
 
         int initialSize = tasks.size();
+
+        // detect clashes before adding event
+        LocalDateTime startDate = parseDisplayDateTime(start);
+        LocalDateTime endDate = parseDisplayDateTime(end);
+        String clashWarning = detectClash(startDate, endDate);
         tasks.add(new Event(description, start, end));
+        if (!clashWarning.isEmpty()) {
+            currString.append("Take note: schedule clash detected: ").append(clashWarning).append("\n");
+        }
+
         assert tasks.size() == initialSize + 1 : "Task list size must increase by 1";
         
         currString.append("added: ").append(description);
@@ -108,7 +120,15 @@ public class TaskList {
         StringBuilder currString = new StringBuilder();
 
         int initialSize = tasks.size();
+
+        // detect clashes with events (deadline occurring within an event window)
+        LocalDateTime due = parseDisplayDateTime(deadline);
+        String clashWarning = detectClash(due, due);
         tasks.add(new Deadline(description, deadline));
+        if (!clashWarning.isEmpty()) {
+            currString.append("Please note: deadline overlaps with another scheduled event: ").append(clashWarning).append("\n");
+        }
+
         assert tasks.size() == initialSize + 1 : "Task list size must increase by 1";
         
         currString.append("added: ").append(description);
@@ -167,6 +187,53 @@ public class TaskList {
         }
 
         return currString.toString();
+    }
+
+    // --- Helpers for clash detection ---
+
+    private LocalDateTime parseDisplayDateTime(String display) {
+        // Parser formats using pattern "MMM dd yyyy HH:mm"; match that here
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm");
+        return LocalDateTime.parse(display, outputFormatter);
+    }
+
+    private String detectClash(LocalDateTime newStart, LocalDateTime newEnd) {
+        StringBuilder conflicts = new StringBuilder();
+        for (Task task : tasks) {
+            if (task instanceof Event) {
+                Event ev = (Event) task;
+                try {
+                    LocalDateTime s = parseDisplayDateTime(ev.getStart());
+                    LocalDateTime e = parseDisplayDateTime(ev.getEnd());
+                    if (intervalsOverlap(newStart, newEnd, s, e)) {
+                        if (conflicts.length() > 0) {
+                            conflicts.append(", ");
+                        }
+                        conflicts.append('"').append(ev.getDescription()).append('"');
+                    }
+                } catch (DateTimeParseException ignored) {
+                    // skip unparseable existing entries
+                }
+            } else if (task instanceof Deadline) {
+                Deadline dl = (Deadline) task;
+                try {
+                    LocalDateTime due = parseDisplayDateTime(dl.getEnd());
+                    if (!newStart.isAfter(due) && !newEnd.isBefore(due)) {
+                        if (conflicts.length() > 0) {
+                            conflicts.append(", ");
+                        }
+                        conflicts.append('"').append(dl.getDescription()).append('"');
+                    }
+                } catch (DateTimeParseException ignored) {
+                }
+            }
+        }
+        return conflicts.toString();
+    }
+
+    private boolean intervalsOverlap(LocalDateTime aStart, LocalDateTime aEnd,
+                                     LocalDateTime bStart, LocalDateTime bEnd) {
+        return !aEnd.isBefore(bStart) && !aStart.isAfter(bEnd);
     }
 
 }
