@@ -15,6 +15,13 @@ public class Deadline extends Task {
         this.end = end;
     }
 
+    /**
+     * Returns the formatted due date/time.
+     */
+    public String getEnd() {
+        return end;
+    }
+
     @Override
     public String getType() {
         return "D";

@@ -67,7 +67,6 @@ public class Borat {
 
     /**
      * Processes a single command and returns a textual response for GUI/CLI display.
-     * Uses Parser for parsing, TaskList for state changes, and Storage for persistence.
      *
      * @param fullCommand raw user input
      * @return response text
@@ -122,8 +121,6 @@ public class Borat {
                     break;
                 case "delete":
                     currResponse.append(tasks.delete(description));
-                default:
-                    currResponse.append("Please try again");
             }
 
             // save tasks once complete
