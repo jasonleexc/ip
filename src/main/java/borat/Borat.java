@@ -42,7 +42,6 @@ public class Borat {
         new Borat("data/tasks.txt").run();
     }
 
-
     /**
      * Processes a single command and returns a textual response for GUI display.
      *
@@ -123,6 +122,8 @@ public class Borat {
                     break;
                 case "delete":
                     currResponse.append(tasks.delete(description));
+                default:
+                    currResponse.append("Please try again");
             }
 
             // save tasks once complete
@@ -133,8 +134,7 @@ public class Borat {
             ui.showError(e.getMessage());
         }
 
-        String result = currResponse.toString();
-        return result;
+        return currResponse.toString();
     }
 }
 
