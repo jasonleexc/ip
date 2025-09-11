@@ -31,10 +31,6 @@ public class Borat {
         // load existing tasks from storage file
         this.tasks = new TaskList(storage.loadTasks());
         
-        assert this.ui != null : "UI must be initialized";
-        assert this.storage != null : "Storage must be initialized";
-        assert this.parser != null : "Parser must be initialized";
-        assert this.tasks != null : "TaskList must be initialized";
     }
 
     /**
@@ -137,9 +133,7 @@ public class Borat {
             ui.showError(e.getMessage());
         }
 
-        assert currResponse != null : "Response builder must not be null";
         String result = currResponse.toString();
-        assert result != null : "Response string must not be null";
         return result;
     }
 }
