@@ -33,7 +33,11 @@ public class Storage {
      *
      * @return list of tasks read from file
      */
+<<<<<<< HEAD
     public List<Task> load() {
+=======
+    public List<Task> loadTasks() {
+>>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
         List<Task> tasks = new ArrayList<>();
         try {
             if (Files.exists(filePath)) {
@@ -91,6 +95,7 @@ public class Storage {
             String description = parts[2];
             
             Task task = null;
+<<<<<<< HEAD
             
             if (taskType.equals("T")) {
                 task = new ToDo(description);
@@ -105,6 +110,26 @@ public class Storage {
                     String end = parts[4];
                     task = new Event(description, start, end);
                 }
+=======
+
+            switch (taskType) {
+                case "T":
+                    task = new ToDo(description);
+                    break;
+                case "D":
+                    if (parts.length >= 4) {
+                        String deadline = parts[3];
+                        task = new Deadline(description, deadline);
+                    }
+                    break;
+                case "E":
+                    if (parts.length >= 5) {
+                        String start = parts[3];
+                        String end = parts[4];
+                        task = new Event(description, start, end);
+                    }
+                    break;
+>>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
             }
             
             if (task != null && isDone) {

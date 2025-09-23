@@ -12,6 +12,14 @@ repositories {
 }
 
 dependencies {
+<<<<<<< HEAD
+=======
+    String javaFxVersion = '17.0.7'
+    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'mac'
+>>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.10.0'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.10.0'
 }
@@ -22,14 +30,22 @@ java {
 }
 
 application {
+<<<<<<< HEAD
     mainClass = 'borat.Borat'
+=======
+    mainClass = 'borat.gui.Launcher'
+>>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
 }
 
 // Shadow plugin configuration for creating executable JAR
 shadowJar {
     archiveFileName = 'borat.jar'
     manifest {
+<<<<<<< HEAD
         attributes 'Main-Class': 'borat.Borat'
+=======
+        attributes 'Main-Class': 'borat.gui.Launcher'
+>>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
     }
 }
 
@@ -49,7 +65,11 @@ test {
 
 jar {
     manifest {
+<<<<<<< HEAD
         attributes 'Main-Class': 'borat.Borat'
+=======
+        attributes 'Main-Class': 'borat.gui.Launcher'
+>>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
     }
 }
 

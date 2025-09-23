@@ -36,7 +36,11 @@ public class StorageTest {
     @Test
     @DisplayName("Test loading from non-existent file returns empty list")
     void testLoadFromNonExistentFile() {
+<<<<<<< HEAD
         List<Task> tasks = storage.load();
+=======
+        List<Task> tasks = storage.loadTasks();
+>>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
         assertNotNull(tasks);
         assertEquals(0, tasks.size());
     }
@@ -50,7 +54,11 @@ public class StorageTest {
         
         storage.save(tasksToSave);
         
+<<<<<<< HEAD
         List<Task> loadedTasks = storage.load();
+=======
+        List<Task> loadedTasks = storage.loadTasks();
+>>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
         assertEquals(1, loadedTasks.size());
         assertTrue(loadedTasks.get(0) instanceof ToDo);
         assertTrue(loadedTasks.get(0).toString().contains("Test todo"));
@@ -66,7 +74,11 @@ public class StorageTest {
         
         storage.save(tasksToSave);
         
+<<<<<<< HEAD
         List<Task> loadedTasks = storage.load();
+=======
+        List<Task> loadedTasks = storage.loadTasks();
+>>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
         assertEquals(1, loadedTasks.size());
         assertTrue(loadedTasks.get(0) instanceof Deadline);
         assertTrue(loadedTasks.get(0).toString().contains("Test deadline"));
@@ -83,7 +95,11 @@ public class StorageTest {
         
         storage.save(tasksToSave);
         
+<<<<<<< HEAD
         List<Task> loadedTasks = storage.load();
+=======
+        List<Task> loadedTasks = storage.loadTasks();
+>>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
         assertEquals(1, loadedTasks.size());
         assertTrue(loadedTasks.get(0) instanceof Event);
         assertTrue(loadedTasks.get(0).toString().contains("Test event"));
@@ -102,7 +118,11 @@ public class StorageTest {
         
         storage.save(tasksToSave);
         
+<<<<<<< HEAD
         List<Task> loadedTasks = storage.load();
+=======
+        List<Task> loadedTasks = storage.loadTasks();
+>>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
         assertEquals(1, loadedTasks.size());
         assertTrue(loadedTasks.get(0).toString().contains("[X]"));
     }
@@ -121,7 +141,11 @@ public class StorageTest {
         
         storage.save(tasksToSave);
         
+<<<<<<< HEAD
         List<Task> loadedTasks = storage.load();
+=======
+        List<Task> loadedTasks = storage.loadTasks();
+>>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
         assertEquals(2, loadedTasks.size());
         assertTrue(loadedTasks.get(0).toString().contains("[X]"));
         assertTrue(loadedTasks.get(1).toString().contains("[ ]"));
@@ -133,7 +157,11 @@ public class StorageTest {
         List<Task> emptyList = new ArrayList<>();
         storage.save(emptyList);
         
+<<<<<<< HEAD
         List<Task> loadedTasks = storage.load();
+=======
+        List<Task> loadedTasks = storage.loadTasks();
+>>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
         assertEquals(0, loadedTasks.size());
     }
 
@@ -146,7 +174,11 @@ public class StorageTest {
         
         storage.save(tasksToSave);
         
+<<<<<<< HEAD
         List<Task> loadedTasks = storage.load();
+=======
+        List<Task> loadedTasks = storage.loadTasks();
+>>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
         assertEquals(1, loadedTasks.size());
         assertTrue(loadedTasks.get(0).toString().contains("Task with special chars: !@#$%^&*()"));
     }
@@ -163,7 +195,11 @@ public class StorageTest {
         Files.write(corruptedFile, corruptedLines);
         
         Storage corruptedStorage = new Storage(corruptedFile.toString());
+<<<<<<< HEAD
         List<Task> loadedTasks = corruptedStorage.load();
+=======
+        List<Task> loadedTasks = corruptedStorage.loadTasks();
+>>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
         
         // should just load valid tasks and skip invalid ones
         assertEquals(2, loadedTasks.size());
@@ -176,7 +212,11 @@ public class StorageTest {
         Files.createFile(emptyFile);
         
         Storage emptyStorage = new Storage(emptyFile.toString());
+<<<<<<< HEAD
         List<Task> loadedTasks = emptyStorage.load();
+=======
+        List<Task> loadedTasks = emptyStorage.loadTasks();
+>>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
         
         assertEquals(0, loadedTasks.size());
     }

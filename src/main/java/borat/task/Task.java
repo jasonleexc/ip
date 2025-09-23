@@ -8,9 +8,15 @@ public abstract class Task {
     protected boolean isDone;
 
     /**
+<<<<<<< HEAD
      * Constructs a task with the given description, initially not done.
      *
      * @param description human-readable task details
+=======
+     * Creates a task with the given description, initially not done.
+     *
+     * @param description Human-readable description.
+>>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
      */
     Task (String description) {
         this.description = description;
@@ -18,6 +24,7 @@ public abstract class Task {
     }
 
     /**
+<<<<<<< HEAD
      * Sets the completion flag of this task.
      *
      * @param bool true if done, false otherwise
@@ -38,6 +45,18 @@ public abstract class Task {
      *
      * @return serialized form for storage
      */
+=======
+     * Sets whether this task is done.
+     *
+     * @param isDone True if completed, false otherwise.
+     */
+    public void setDone(boolean isDone) {
+        this.isDone = isDone;
+    }
+
+    public abstract String getType();
+
+>>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
     public String toFileString() {
         return (isDone ? "1" : "0") + " | " + description;
     }
@@ -46,6 +65,13 @@ public abstract class Task {
     public String toString() {
         return "[" + this.getType() + "][" + (isDone ? "X" : " ") + "] " + description;
     }
+<<<<<<< HEAD
+=======
+
+    public String getDescription() {
+        return description;
+    }
+>>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
 }
 
 
