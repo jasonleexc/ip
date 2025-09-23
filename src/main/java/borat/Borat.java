@@ -24,13 +24,13 @@ public class Borat {
     public Borat(String filePath) {
         assert filePath != null : "File path cannot be null";
         assert !filePath.trim().isEmpty() : "File path cannot be empty";
-        
+
         this.ui = new UI();
         this.storage = new Storage(filePath);
         this.parser = new Parser();
         // load existing tasks from storage file
         this.tasks = new TaskList(storage.loadTasks());
-        
+
     }
 
     /**
@@ -67,22 +67,23 @@ public class Borat {
 
     /**
      * Processes a single command and returns a textual response for GUI/CLI display.
+     * Uses Parser for parsing, TaskList for state changes, and Storage for persistence.
      *
      * @param fullCommand raw user input
      * @return response text
      */
     public String getResponse(String fullCommand) {
         assert fullCommand != null : "Command cannot be null";
-        
+
         StringBuilder currResponse = new StringBuilder();
         try {
             String[] parsedCommand = parser.parseCommand(fullCommand);
             assert parsedCommand != null : "Parser must return non-null result";
             assert parsedCommand.length == 2 : "Parser must return exactly 2 elements";
-            
+
             String firstWord = parsedCommand[0];
             String description = parsedCommand[1];
-            
+
             assert firstWord != null : "First word cannot be null";
             assert !firstWord.trim().isEmpty() : "First word cannot be empty";
 
@@ -121,6 +122,8 @@ public class Borat {
                     break;
                 case "delete":
                     currResponse.append(tasks.delete(description));
+                default:
+                    currResponse.append("Please try again");
             }
 
             // save tasks once complete
@@ -134,5 +137,3 @@ public class Borat {
         return currResponse.toString();
     }
 }
-
-

@@ -20,20 +20,6 @@ public class Event extends Task {
         this.end = end;
     }
 
-    /**
-     * Returns the formatted start time.
-     */
-    public String getStart() {
-        return start;
-    }
-
-    /**
-     * Returns the formatted end time.
-     */
-    public String getEnd() {
-        return end;
-    }
-
     @Override
     public String getType() {
         return "E";
@@ -49,5 +35,3 @@ public class Event extends Task {
         return super.toString() + " (from: " + start + " to: " + end + ")";
     }
 }
-
-

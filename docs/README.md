@@ -1,3 +1,35 @@
+<<<<<<< HEAD
+# Duke User Guide
+
+// Update the title above to match the actual product name
+
+// Product screenshot goes here
+
+// Product intro goes here
+
+## Adding deadlines
+
+// Describe the action and its outcome.
+
+// Give examples of usage
+
+Example: `keyword (optional arguments)`
+
+// A description of the expected outcome goes here
+
+```
+expected output
+```
+
+## Feature ABC
+
+// Feature details
+
+
+## Feature XYZ
+
+// Feature details
+=======
 # Borat User Guide
 
 ![Borat Chatbot](https://img.shields.io/badge/Version-1.0-blue.svg) ![Java](https://img.shields.io/badge/Java-17-orange.svg) ![Platform](https://img.shields.io/badge/Platform-Cross--Platform-green.svg)
@@ -216,3 +248,4 @@ Your tasks are automatically saved to `data/tasks.txt` in the same folder as the
 ---
 
 **Happy task managing with Borat! 🎉**
+>>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4

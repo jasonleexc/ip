@@ -85,11 +85,11 @@ public class Storage {
             if (parts.length < 3) {
                 return null;
             }
-            
+
             String taskType = parts[0];
             boolean isDone = parts[1].equals("1");
             String description = parts[2];
-            
+
             Task task = null;
 
             switch (taskType) {
@@ -110,11 +110,11 @@ public class Storage {
                     }
                     break;
             }
-            
+
             if (task != null && isDone) {
                 task.setDone(true);
             }
-            
+
             return task;
         } catch (Exception e) {
             System.out.println("Error parsing task: " + line);
@@ -122,5 +122,3 @@ public class Storage {
         }
     }
 }
-
-

@@ -18,13 +18,13 @@ public class Parser {
      */
     public String[] parseCommand(String command) {
         assert command != null : "Command cannot be null";
-        
+
         String[] split = command.trim().split("\\s", 2);
         assert split.length >= 1 : "Split must have at least one element";
-        
+
         String firstWord = split[0];
         String description = split.length > 1 ? split[1] : "";
-        
+
         assert firstWord != null : "First word cannot be null";
         assert description != null : "Description cannot be null";
 
@@ -41,25 +41,25 @@ public class Parser {
     public String[] parseDeadline(String description) {
         assert description != null : "Description cannot be null";
         assert !description.trim().isEmpty() : "Description cannot be empty";
-        
+
         String[] parts = description.split("/by", 2);
 
         // handle exception
         if (parts.length != 2) {
             throw new IllegalArgumentException("Deadline command must include /by followed by date and time");
         }
-        
+
         String desc = parts[0].trim();
         String dateTimeStr = parts[1].trim();
-        
+
         assert !desc.isEmpty() : "Description part cannot be empty";
         assert !dateTimeStr.isEmpty() : "DateTime string cannot be empty";
-        
+
         try {
             LocalDateTime deadline = parseDateTime(dateTimeStr);
             String formattedDeadline = formatDateTime(deadline);
             assert !formattedDeadline.isEmpty() : "Formatted deadline cannot be empty";
-            
+
             return new String[] {desc, formattedDeadline};
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Invalid date/time format. Use format: d/M/yyyy HHmm (e.g., 2/12/2019 1800)");
@@ -77,22 +77,22 @@ public class Parser {
     public String[] parseEvent(String description) {
         assert description != null : "Description cannot be null";
         assert !description.trim().isEmpty() : "Description cannot be empty";
-        
+
         String[] parts = description.split("\\s*/from\\s*|\\s*/to\\s*", 3);
 
         // handle exception
         if (parts.length != 3) {
             throw new IllegalArgumentException("Event command must include /from and /to followed by date and time");
         }
-        
+
         String desc = parts[0].trim();
         String startStr = parts[1].trim();
         String endStr = parts[2].trim();
-        
+
         assert !desc.isEmpty() : "Description part cannot be empty";
         assert !startStr.isEmpty() : "Start time string cannot be empty";
         assert !endStr.isEmpty() : "End time string cannot be empty";
-        
+
         try {
             LocalDateTime start = parseDateTime(startStr);
             LocalDateTime end = parseDateTime(endStr);
@@ -101,7 +101,7 @@ public class Parser {
             String formattedEnd = formatDateTime(end);
             assert !formattedStart.isEmpty() : "Formatted start time cannot be empty";
             assert !formattedEnd.isEmpty() : "Formatted end time cannot be empty";
-            
+
             return new String[] {desc, formattedStart, formattedEnd};
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Invalid date/time format. Use format: d/M/yyyy HHmm (e.g., 2/12/2019 1800)");
@@ -118,7 +118,7 @@ public class Parser {
     private LocalDateTime parseDateTime(String dateTimeString) throws DateTimeParseException {
         assert dateTimeString != null : "DateTime string cannot be null";
         assert !dateTimeString.trim().isEmpty() : "DateTime string cannot be empty";
-        
+
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
 
         LocalDateTime result = LocalDateTime.parse(dateTimeString, inputFormatter);
@@ -133,7 +133,7 @@ public class Parser {
      */
     private String formatDateTime(LocalDateTime dateTime) {
         assert dateTime != null : "DateTime cannot be null";
-        
+
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm");
 
         String result = dateTime.format(outputFormatter);
@@ -141,5 +141,3 @@ public class Parser {
         return result;
     }
 }
-
-

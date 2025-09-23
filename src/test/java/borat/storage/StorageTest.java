@@ -47,9 +47,9 @@ public class StorageTest {
         List<Task> tasksToSave = new ArrayList<>();
         ToDo todo = new ToDo("Test todo");
         tasksToSave.add(todo);
-        
+
         storage.save(tasksToSave);
-        
+
         List<Task> loadedTasks = storage.loadTasks();
         assertEquals(1, loadedTasks.size());
         assertTrue(loadedTasks.get(0) instanceof ToDo);
@@ -63,9 +63,9 @@ public class StorageTest {
         List<Task> tasksToSave = new ArrayList<>();
         Deadline deadline = new Deadline("Test deadline", "Dec 31 2023 23:59");
         tasksToSave.add(deadline);
-        
+
         storage.save(tasksToSave);
-        
+
         List<Task> loadedTasks = storage.loadTasks();
         assertEquals(1, loadedTasks.size());
         assertTrue(loadedTasks.get(0) instanceof Deadline);
@@ -80,9 +80,9 @@ public class StorageTest {
         List<Task> tasksToSave = new ArrayList<>();
         Event event = new Event("Test event", "Dec 31 2023 20:00", "Dec 31 2023 22:00");
         tasksToSave.add(event);
-        
+
         storage.save(tasksToSave);
-        
+
         List<Task> loadedTasks = storage.loadTasks();
         assertEquals(1, loadedTasks.size());
         assertTrue(loadedTasks.get(0) instanceof Event);
@@ -99,9 +99,9 @@ public class StorageTest {
         ToDo todo = new ToDo("Test todo");
         todo.setDone(true);
         tasksToSave.add(todo);
-        
+
         storage.save(tasksToSave);
-        
+
         List<Task> loadedTasks = storage.loadTasks();
         assertEquals(1, loadedTasks.size());
         assertTrue(loadedTasks.get(0).toString().contains("[X]"));
@@ -111,16 +111,16 @@ public class StorageTest {
     @DisplayName("Test saving and loading mixed marked/unmarked tasks")
     void testSaveAndLoadMixedMarkedTasks() throws Exception {
         List<Task> tasksToSave = new ArrayList<>();
-        
+
         ToDo todo1 = new ToDo("Task 1");
         todo1.setDone(true);
         tasksToSave.add(todo1);
-        
+
         ToDo todo2 = new ToDo("Task 2");
         tasksToSave.add(todo2);
-        
+
         storage.save(tasksToSave);
-        
+
         List<Task> loadedTasks = storage.loadTasks();
         assertEquals(2, loadedTasks.size());
         assertTrue(loadedTasks.get(0).toString().contains("[X]"));
@@ -132,7 +132,7 @@ public class StorageTest {
     void testSaveEmptyList() throws Exception {
         List<Task> emptyList = new ArrayList<>();
         storage.save(emptyList);
-        
+
         List<Task> loadedTasks = storage.loadTasks();
         assertEquals(0, loadedTasks.size());
     }
@@ -143,9 +143,9 @@ public class StorageTest {
         List<Task> tasksToSave = new ArrayList<>();
         ToDo specialTodo = new ToDo("Task with special chars: !@#$%^&*()");
         tasksToSave.add(specialTodo);
-        
+
         storage.save(tasksToSave);
-        
+
         List<Task> loadedTasks = storage.loadTasks();
         assertEquals(1, loadedTasks.size());
         assertTrue(loadedTasks.get(0).toString().contains("Task with special chars: !@#$%^&*()"));
@@ -161,10 +161,10 @@ public class StorageTest {
         corruptedLines.add("T | 1 | Valid todo");
         corruptedLines.add("D | 0 | Valid deadline | Dec 31 2023 23:59");
         Files.write(corruptedFile, corruptedLines);
-        
+
         Storage corruptedStorage = new Storage(corruptedFile.toString());
         List<Task> loadedTasks = corruptedStorage.loadTasks();
-        
+
         // should just load valid tasks and skip invalid ones
         assertEquals(2, loadedTasks.size());
     }
@@ -174,10 +174,10 @@ public class StorageTest {
     void testHandleEmptyFile() throws Exception {
         Path emptyFile = tempDir.resolve("empty-tasks.txt");
         Files.createFile(emptyFile);
-        
+
         Storage emptyStorage = new Storage(emptyFile.toString());
         List<Task> loadedTasks = emptyStorage.loadTasks();
-        
+
         assertEquals(0, loadedTasks.size());
     }
 }
