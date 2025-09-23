@@ -194,7 +194,7 @@ public class TaskList {
     }
 
     private LocalDateTime parseDisplayDateTime(String display) {
-        // parse formats using pattern "MMM dd yyyy HH:mm"; match that here
+        // parse formats using pattern "MMM dd yyyy HH:mm"
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm");
         return LocalDateTime.parse(display, outputFormatter);
     }
