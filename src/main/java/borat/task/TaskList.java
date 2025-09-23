@@ -24,6 +24,10 @@ public class TaskList {
         return tasks;
     }
 
+    /**
+     * Marks task as completed, or unmarks task.
+     *
+     */
     public String markTask(String[] words) {
         assert words != null : "Words array cannot be null";
         assert words.length >= 2 : "Words array must have at least 2 elements";
