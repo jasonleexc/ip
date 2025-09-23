@@ -21,6 +21,11 @@ public class TaskList {
         return tasks;
     }
 
+    /**
+     * Marks task as incomplete, or unmarks task.
+     *
+     * @param words from command line arguments
+     */
     public String markTask(String[] words) {
         assert words != null : "Words array cannot be null";
         assert words.length >= 2 : "Words array must have at least 2 elements";
