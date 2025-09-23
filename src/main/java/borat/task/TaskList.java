@@ -2,20 +2,9 @@ package borat.task;
 
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
 
 import borat.exception.BoratExceptions;
 
-/**
- * Mutable collection of {@link Task} with helper operations used by commands.
- */
-public class TaskList {
-    private final List<Task> tasks;
-
-    /**
-     * Creates an empty task list.
-     */
-=======
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -25,12 +14,13 @@ import borat.exception.BoratException;
 public class TaskList {
     private final List<Task> tasks;
 
->>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
+        /**
+     * Creates an empty task list.
+     */
     public TaskList() {
         this.tasks = new ArrayList<>();
     }
 
-<<<<<<< HEAD
     /**
      * Wraps an existing list of tasks.
      *
@@ -45,38 +35,20 @@ public class TaskList {
      *
      * @return task list
      */
-=======
     public TaskList(List<Task> tasks) {
         assert tasks != null : "Task list parameter cannot be null";
         this.tasks = tasks;
     }
 
->>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
     public List<Task> getTasks() {
         return tasks;
     }
 
-<<<<<<< HEAD
     /**
      * Marks or unmarks a task at the given 1-based index, printing status.
      *
      * @param words array containing command and index.
      */
-    public void markTask(String[] words) {
-        try {
-            int index = Integer.parseInt(words[1]) - 1;
-            Task task = tasks.get(index);
-
-            if (words[0].equals("mark")) {
-                task.setDone(true);
-                System.out.println("Nice! I've marked this task as done:");
-            } else {
-                task.setDone(false);
-                System.out.println("Ok, I've marked this task as not done yet:");
-            }
-
-            System.out.println(" " + task.toString());
-=======
     public String markTask(String[] words) {
         assert words != null : "Words array cannot be null";
         assert words.length >= 2 : "Words array must have at least 2 elements";
@@ -99,26 +71,10 @@ public class TaskList {
                 task.setDone(false);
                 currString.append("Ok, I've marked this task as not done yet:");
             }
->>>>>>> 92aed1889172aa707c804a68c94cc466d8b28fd4
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Invalid task number!");
         } catch (NumberFormatException e) {
             System.out.println("Please provide a valid task number!");
-        }
-<<<<<<< HEAD
-    }
-
-    /**
-     * Prints the task list to standard output.
-     */
-    public void listItems() {
-        System.out.println("Here are the tasks in your list:");
-        if (tasks.isEmpty()) {
-            System.out.println("No items yet");
-        } else {
-            for (int i = 0; i < tasks.size(); i++) {
-                System.out.println((i + 1) + "." + tasks.get(i));
-            }
         }
     }
 
@@ -181,7 +137,6 @@ public class TaskList {
         } catch (IndexOutOfBoundsException e) {
             throw new BoratExceptions("Task number does not exist.");
         }
-=======
 
         return currString.toString();
     }
