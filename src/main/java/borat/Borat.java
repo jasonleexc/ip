@@ -1,6 +1,6 @@
 package borat;
 
-import borat.exception.BoratException;
+import borat.exception.BoratExceptions;
 import borat.parser.Parser;
 import borat.storage.Storage;
 import borat.task.TaskList;
@@ -130,7 +130,7 @@ public class Borat {
             storage.save(tasks.getTasks());
         } catch (NumberFormatException e) {
             ui.showError("Please provide a valid number. ");
-        } catch (BoratException e) {
+        } catch (BoratExceptions e) {
             ui.showError(e.getMessage());
         }
 
