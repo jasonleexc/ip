@@ -85,7 +85,7 @@ public class Borat {
                    ui.showError("I don't know what that means.");
                 }
                 
-                // save tasks once complete
+                // save tasks
                 storage.save(tasks.getTasks());
             } catch (NumberFormatException e) {
                 ui.showError("Please provide a valid number.");
