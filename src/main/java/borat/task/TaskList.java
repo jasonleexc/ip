@@ -145,6 +145,7 @@ public class TaskList {
 
         return currString.toString();
     }
+
     public String delete(String index) throws BoratException {
         assert index != null : "Index string cannot be null";
 
@@ -173,5 +174,4 @@ public class TaskList {
 
         return currString.toString();
     }
-
 }
