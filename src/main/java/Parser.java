@@ -15,7 +15,7 @@ public class Parser {
 
     public String[] parseDeadline(String description) {
         String[] parts = description.split("/by", 2);
-        // handle exception
+        // handle formatting exception
         if (parts.length != 2) {
             throw new IllegalArgumentException("Deadline command must include /by followed by date and time");
         }
