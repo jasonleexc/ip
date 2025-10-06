@@ -1,9 +1,9 @@
 package borat.task;
 
+import borat.exception.BoratExceptions;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import borat.exception.BoratException;
 
 public class TaskList {
     private final List<Task> tasks;
@@ -70,13 +70,13 @@ public class TaskList {
         return currString.toString();
     }
 
-    public String addToDo(String description) throws BoratException {
+    public String addToDo(String description) throws BoratExceptions {
         assert description != null : "Description cannot be null";
 
         StringBuilder currString = new StringBuilder();
 
         if (description.isEmpty()) {
-            throw new BoratException("Command cannot be empty!");
+            throw new BoratExceptions("Command cannot be empty!");
         }
 
         int initialSize = tasks.size();
@@ -146,7 +146,7 @@ public class TaskList {
         return currString.toString();
     }
 
-    public String delete(String index) throws BoratException {
+    public String delete(String index) throws BoratExceptions {
         assert index != null : "Index string cannot be null";
 
         StringBuilder currString = new StringBuilder();
@@ -167,9 +167,9 @@ public class TaskList {
             currString.append(" ").append(deletedTask).append("\n");
             currString.append("Now you have ").append(tasks.size()).append(" tasks in the list.");
         } catch (NumberFormatException e) {
-            throw new BoratException("Please provide a valid task number to delete.");
+            throw new BoratExceptions("Please provide a valid task number to delete.");
         } catch (IndexOutOfBoundsException e) {
-            throw new BoratException("Task number does not exist.");
+            throw new BoratExceptions("Task number does not exist.");
         }
 
         return currString.toString();
