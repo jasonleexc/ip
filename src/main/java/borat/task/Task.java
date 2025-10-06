@@ -1,16 +1,29 @@
 package borat.task;
 
+/**
+ * Base type for all tasks maintained by the application.
+ */
 public abstract class Task {
     protected final String description;
     protected boolean isDone;
 
+    /**
+     * Creates a task with the given description, initially not done.
+     *
+     * @param description Human-readable description.
+     */
     Task (String description) {
         this.description = description;
         this.isDone = false;
     }
 
-    public void setDone(boolean bool) {
-        this.isDone = bool;
+    /**
+     * Sets whether this task is done.
+     *
+     * @param isDone True if completed, false otherwise.
+     */
+    public void setDone(boolean isDone) {
+        this.isDone = isDone;
     }
 
     public abstract String getType();
