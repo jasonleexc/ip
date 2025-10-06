@@ -12,15 +12,28 @@ import borat.task.ToDo;
 import borat.task.Deadline;
 import borat.task.Event;
 
+/**
+ * Loads tasks to and from a plain-text file.
+ */
 public class Storage {
     private final Path filePath;
 
+    /**
+     * Creates a storage instance in the given file path.
+     *
+     * @param filePath path to the data file
+     */
     public Storage(String filePath) {
         this.filePath = Paths.get(filePath);
     }
 
-    // load existing tasks (empty list if file is missing)
-    public List<Task> load() {
+    /**
+     * Loads existing tasks from disk. Returns an empty list if the file is
+     * missing or unreadable.
+     *
+     * @return list of tasks read from file
+     */
+    public List<Task> loadTasks() {
         List<Task> tasks = new ArrayList<>();
         try {
             if (Files.exists(filePath)) {
@@ -39,7 +52,12 @@ public class Storage {
         return tasks;
     }
 
-    // save current tasks to file
+    /**
+     * Saves the provided tasks to the backing file, creating parent
+     * directories as needed.
+     *
+     * @param tasks tasks to persist
+     */
     public void save(List<Task> tasks) {
         List<String> lines = new ArrayList<>();
         try {
@@ -54,38 +72,49 @@ public class Storage {
         }
     }
 
+    /**
+     * Parses a single line from the data file into a {@link Task}.
+     * Lines follow the format produced by each task's {@code toFileString()}.
+     *
+     * @param line raw line from file
+     * @return parsed Task or null if the line is malformed
+     */
     private Task parseTaskFromFile(String line) {
         try {
             String[] parts = line.split(" \\| ");
             if (parts.length < 3) {
                 return null;
             }
-            
+
             String taskType = parts[0];
             boolean isDone = parts[1].equals("1");
             String description = parts[2];
-            
+
             Task task = null;
-            
-            if (taskType.equals("T")) {
-                task = new ToDo(description);
-            } else if (taskType.equals("D")) {
-                if (parts.length >= 4) {
-                    String deadline = parts[3];
-                    task = new Deadline(description, deadline);
-                }
-            } else if (taskType.equals("E")) {
-                if (parts.length >= 5) {
-                    String start = parts[3];
-                    String end = parts[4];
-                    task = new Event(description, start, end);
-                }
+
+            switch (taskType) {
+                case "T":
+                    task = new ToDo(description);
+                    break;
+                case "D":
+                    if (parts.length >= 4) {
+                        String deadline = parts[3];
+                        task = new Deadline(description, deadline);
+                    }
+                    break;
+                case "E":
+                    if (parts.length >= 5) {
+                        String start = parts[3];
+                        String end = parts[4];
+                        task = new Event(description, start, end);
+                    }
+                    break;
             }
-            
+
             if (task != null && isDone) {
                 task.setDone(true);
             }
-            
+
             return task;
         } catch (Exception e) {
             System.out.println("Error parsing task: " + line);
@@ -93,5 +122,3 @@ public class Storage {
         }
     }
 }
-
-
